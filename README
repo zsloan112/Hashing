@@ -1,0 +1,15 @@
+Implementing a Hash Table with Chaining:
+----------------------------------------
+
+1.  Create a hash table with 20 slots.
+	- Array pointer to a node with an integer value
+	- Each slot is a sorted singly linked list
+2. Hash Function:
+	- h(k) = k mod 20
+
+3. The program has the following menu options
+	1. Insert
+	2. Delete
+	3. Search
+	4. Print elements in each slot
+	5. Quit Program
