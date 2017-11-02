@@ -8,8 +8,8 @@ Implementing a Hash Table with Chaining:
 	- h(k) = k mod 20
 
 3. The program has the following menu options
-	1. Insert
-	2. Delete
-	3. Search
-	4. Print elements in each slot
+	1. Insert - Create a new node with value and insert to right slot in right location 			in the list. Does not allow an insert of a value that is already in the 			map
+	2. Delete - Search for a key value and delete from a list in a slot. If there is no 			such node, display and error message 
+	3. Search - Search for a key value and display key value with slot number
+	4. Print elements in each slot - Print all values in each slot
 	5. Quit Program

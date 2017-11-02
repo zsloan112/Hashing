@@ -47,45 +47,76 @@ public:
 void hashInsert(int key){
 	int hashLoc = h(key);
 	HashNode* prev = NULL;
+	HashNode* newEntry = NULL;
 	HashNode* entry = hTable[hashLoc];
-	while(entry != NULL){
+
+
+	while(entry != NULL && entry->value < key){
 		prev = entry;
 		entry = entry->next;
 	}
-	if(entry == NULL){
-		entry = new HashNode(key);
-		if(prev == NULL){
-			hTable[hashLoc] = entry;
-		}
-		else{
-			prev->next = entry;
-		}
+
+	newEntry = new HashNode(key);
+
+	if(prev == NULL){
+		hTable[hashLoc] = newEntry;
+	}else{
+		prev->next = newEntry;
 	}
-	else{
-		entry->value = key;
-	}
+	newEntry->next = entry;
+
 }
 
-void hashDelete(int key){
+ int hashDelete(int key){
 	int hashLoc = h(key);
+	if(hTable[hashLoc] != NULL){
+		HashNode* prev = NULL;
+		HashNode* entry = hTable[hashLoc];
+
+		while(entry->next != NULL && entry->value != key){
+			prev = entry;
+			entry = entry->next;
+		}
+
+		if(entry->value == key){
+			if(prev == NULL){
+				HashNode* nextEntry = entry->next;
+				delete entry;
+				hTable[hashLoc] = nextEntry;
+				return 1;
+				
+			}else{
+				HashNode* next = entry->next;
+				delete entry;
+				prev->next = next;
+				return 1;
+			}
+		}
+
+		return 0;
+	}
+
+
+	/*int hashLoc = h(key);
 	HashNode *entry = hTable[hashLoc];
 	HashNode *prev = NULL;
-
-	if(entry == NULL || entry->value != key){
+	/*
+	if(entry == NULL){
 		cout << "No element found at key" << endl;
 		return;
 	}
 
-	while(entry->next != NULL){
+	while(entry->value != key){
 		prev = entry;
 		entry = entry->next;
 	}
 	if(prev != NULL){
 		prev->next = entry->next;
 	}
+	//prev->next = entry->next;
 	delete entry;
 	cout << "Entry Successfully Deleted" << endl;
-	
+	*/
 }
 
 int hashSearch(int key){
@@ -150,9 +181,14 @@ int main(){
 				break;
 			case 2:
 				int delHashValue;
+			
 				cout << "Enter a value to delete from the table: ";
 				cin >> delHashValue;
-				hash.hashDelete(delHashValue);
+				if(hash.hashDelete(delHashValue) == 1){
+					cout << "Element Successfully Deleted" << endl;
+				}else{
+					cout << "Element is not in the hash table" << endl;
+				}
 				break;
 			case 3:
 				int searchVal;
